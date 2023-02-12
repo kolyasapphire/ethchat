@@ -1,0 +1,28 @@
+{
+  "name": "ethchat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "start": "next start",
+    "build": "next build"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "2.4.9",
+    "@emotion/react": "11.10.5",
+    "@emotion/styled": "11.10.5",
+    "@types/react": "18.0.27",
+    "ethers": "6.0.2",
+    "framer-motion": "9.0.2",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "swr": "2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "18.13.0",
+    "typescript": "4.9.5"
+  }
+}
