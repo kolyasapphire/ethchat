@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/4752441/218323539-848fcdc5-2970-45f5-ba88-12bc84755cb9.png" width=50% height=50%>
+
 # ethchat
 
 Super simple web app which reads blocks from Ethereum and tries to decode each transaction data to text.
