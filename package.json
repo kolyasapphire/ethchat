@@ -10,7 +10,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "@chakra-ui/react": "2.5.0",
+    "@chakra-ui/react": "2.5.1",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@types/react": "18.0.28",
