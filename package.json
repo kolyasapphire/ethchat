@@ -14,7 +14,7 @@
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
     "@types/react": "18.0.28",
-    "ethers": "6.0.8",
+    "ethers": "6.1.0",
     "framer-motion": "10.1.0",
     "next": "13.2.3",
     "react": "18.2.0",
