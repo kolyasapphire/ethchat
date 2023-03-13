@@ -1,7 +1,5 @@
 import { ethers } from 'ethers'
 
-const englishFilter = /^[a-zA-Z0-9?><;,{}[\]\-_+=!@#$%\^&*|']*$/
-
 const blacklist = [
   'Ignore',
   'BFX_REFILL_SWEEP',
@@ -15,7 +13,7 @@ const blacklist = [
 export const decodeData = (data: string) => {
   try {
     const decoded = ethers.toUtf8String(data)
-    if (decoded.match(englishFilter) && !blacklist.includes(decoded)) {
+    if (decoded.length > 5 && !blacklist.includes(decoded)) {
       return decoded
     } else {
       return null
