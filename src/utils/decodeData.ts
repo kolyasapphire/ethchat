@@ -8,6 +8,8 @@ const blacklist = [
   'RM',
   'Rns_',
   'W8b%',
+  '$AGI',
+  'c',
 ]
 
 export const decodeData = (data: string) => {
