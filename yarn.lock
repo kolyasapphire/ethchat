@@ -1281,10 +1281,10 @@ focus-lock@^0.11.2:
   dependencies:
     tslib "^2.0.3"
 
-framer-motion@10.2.3:
-  version "10.2.3"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.2.3.tgz#80ac552648f05b707d0595be5e87551aa673689a"
-  integrity sha512-+TBxfia8Ym/lYSvTAhome7LYFIR8fKhImuln5zcp9D8nFI2wNSDdBRtK5WoWTyjHXJ7efv5xv376Ma85zHhtUg==
+framer-motion@10.8.5:
+  version "10.8.5"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.8.5.tgz#3fc236a186913b8fbd4a61e70034168b668161c7"
+  integrity sha512-qwvUAIwCc6fEZhg7ST+/z+f7Vt882jJvLiWZUHNdq2oZ/Y7gM6mLlpKi9xQg+pLu6DQVypikcKQ+MKnoFoXAJg==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
