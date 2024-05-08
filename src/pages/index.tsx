@@ -60,6 +60,7 @@ const Index = () => {
     if (pointer) fetchBlock(pointer)
   }, [pointer, fetchBlock])
 
+  // biome-ignore lint: We only care about rawBlock changing for deps, not messages (would be an inf loop)
   useEffect(() => {
     if (rawBlock) {
       const newMessages: Message[] = []
@@ -79,7 +80,7 @@ const Index = () => {
       setMessages([...newMessages, ...messages])
       setPointer(rawBlock.number - 1)
     }
-  }, [rawBlock, messages])
+  }, [rawBlock])
 
   return (
     <Layout>
