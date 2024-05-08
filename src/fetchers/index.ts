@@ -4,11 +4,21 @@ import { ethers } from 'ethers'
 
 const CHAIN_ID = 1
 
-const lastBlockRequest = async (RPC: string) =>
-  (await new ethers.JsonRpcProvider(RPC, CHAIN_ID).getBlock('latest')).number
+const PROVIDER_CONFIG = {
+  staticNetwork: true,
+}
 
-  useQuery('lastBlock', () => lastBlockRequest(RPC), {
+const lastBlockRequest = async ([_key, RPC]: string) => {
+  const block = await new ethers.JsonRpcProvider(
+    RPC,
+    CHAIN_ID,
+    PROVIDER_CONFIG,
+  ).getBlock('latest')
+  return block.number
+}
+
 export const lastBlockFetcher = (RPC: string, paused: boolean) =>
+  useQuery(['lastBlock', RPC], lastBlockRequest, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: false,
@@ -21,10 +31,11 @@ const blockRequest = async (
 ) => {
   const blockNumber = args.arg
 
-  const block = await new ethers.JsonRpcProvider(RPC, CHAIN_ID).getBlock(
-    blockNumber,
-    true,
-  ) // prefetch transactions in block
+  const block = await new ethers.JsonRpcProvider(
+    RPC,
+    CHAIN_ID,
+    PROVIDER_CONFIG,
+  ).getBlock(blockNumber, true) // prefetch transactions in block
 
   return block as ethers.Block & {
     prefetchedTransactions: ethers.TransactionResponse[] // hack bad ethers types
