@@ -17,9 +17,8 @@ export const decodeData = (data: string) => {
     const decoded = ethers.toUtf8String(data)
     if (decoded.length > 5 && !blacklist.includes(decoded)) {
       return decoded
-    } else {
-      return null
     }
+    return null
   } catch {
     return null
   }
