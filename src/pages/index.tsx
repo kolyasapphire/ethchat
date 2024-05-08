@@ -82,6 +82,11 @@ const Index = () => {
     }
   }, [rawBlock])
 
+  const fromHowManyBlocks = messages.reduce(
+    (acc, { blockNumber }) => acc.add(blockNumber),
+    new Set(),
+  ).size
+
   return (
     <Layout>
       <VStack>
@@ -108,6 +113,9 @@ const Index = () => {
               <Box>Latest block: {lastBlock ?? '...'}</Box>
               <Box>Handling block: {pointer ?? '...'}</Box>
             </HStack>
+            <Text>
+              {messages.length} messages from {fromHowManyBlocks} blocks
+            </Text>
             <VStack>
               {!messages.length && <Box>Nothing yet, hang on.</Box>}
               {messages.map((x) => (
