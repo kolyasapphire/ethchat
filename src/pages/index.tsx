@@ -49,7 +49,9 @@ const Index = () => {
   const [pointer, setPointer] = useState<number>(null)
   const [messages, setMessages] = useState<Message[]>([])
 
-  const { data: lastBlock } = lastBlockFetcher(RPC)
+  const [paused, setPaused] = useState(false)
+
+  const { data: lastBlock } = lastBlockFetcher(RPC, paused)
   const { data: rawBlock, trigger: fetchBlock } = blockRangeFetcher(RPC)
 
   useEffect(() => {
@@ -57,8 +59,8 @@ const Index = () => {
   }, [lastBlock])
 
   useEffect(() => {
-    if (pointer) fetchBlock(pointer)
-  }, [pointer, fetchBlock])
+    if (pointer && !paused) fetchBlock(pointer)
+  }, [pointer, paused, fetchBlock])
 
   // biome-ignore lint: We only care about rawBlock changing for deps, not messages (would be an inf loop)
   useEffect(() => {
@@ -116,6 +118,16 @@ const Index = () => {
             <Text>
               {messages.length} messages from {fromHowManyBlocks} blocks
             </Text>
+            <Button
+              onClick={() => {
+                setPaused((prevValue) => {
+                  if (prevValue === true) fetchBlock(pointer)
+                  return !prevValue
+                })
+              }}
+            >
+              {!paused ? 'Pause' : 'Unpause'}
+            </Button>
             <VStack>
               {!messages.length && <Box>Nothing yet, hang on.</Box>}
               {messages.map((x) => (

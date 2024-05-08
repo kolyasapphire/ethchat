@@ -7,11 +7,12 @@ const CHAIN_ID = 1
 const lastBlockRequest = async (RPC: string) =>
   (await new ethers.JsonRpcProvider(RPC, CHAIN_ID).getBlock('latest')).number
 
-export const lastBlockFetcher = (RPC: string) =>
   useQuery('lastBlock', () => lastBlockRequest(RPC), {
+export const lastBlockFetcher = (RPC: string, paused: boolean) =>
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: false,
+    isPaused: () => paused,
   })
 
 const blockRequest = async (
