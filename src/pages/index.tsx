@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Box, Link, VStack, HStack } from '@chakra-ui/react'
+import useLocalStorage from 'hooks/useLocalStorage'
+import {
+  Box,
+  Link,
+  VStack,
+  HStack,
+  Textarea,
+  Button,
+  Text,
+} from '@chakra-ui/react'
 import Layout from 'components/Layout'
 
 import { decodeData } from 'utils'
@@ -32,11 +41,16 @@ const IndexerLink = ({
 )
 
 const Index = () => {
-  const { data: lastBlock } = lastBlockFetcher()
-  const { data: rawBlock, trigger: fetchBlock } = blockRangeFetcher()
+  const envRPC = process.env.NEXT_PUBLIC_RPC
+  const [storageRPC, setStorageRPC] = useLocalStorage<string>('RPC', null)
+  const RPC = envRPC ?? storageRPC
+  const [rpcArea, setRpcArea] = useState<string>('')
 
   const [pointer, setPointer] = useState<number>(null)
   const [messages, setMessages] = useState<Message[]>([])
+
+  const { data: lastBlock } = lastBlockFetcher(RPC)
+  const { data: rawBlock, trigger: fetchBlock } = blockRangeFetcher(RPC)
 
   useEffect(() => {
     if (lastBlock) setPointer(lastBlock)
@@ -70,40 +84,64 @@ const Index = () => {
   return (
     <Layout>
       <VStack>
-        <HStack>
-          <Box>Latest block: {lastBlock ?? '...'}</Box>
-          <Box>Handling block: {pointer ?? '...'}</Box>
-        </HStack>
-        <VStack>
-          {!messages.length && <Box>Nothing yet, hang on.</Box>}
-          {messages.map((x) => (
-            <VStack
-              key={x.txHash}
-              border='1px solid grey'
-              borderRadius={5}
-              p={2}
+        {!RPC ? (
+          <VStack>
+            <Text>Set your RPC endpoint here:</Text>
+            <Textarea
+              value={rpcArea}
+              onChange={(e) => {
+                setRpcArea(e.target.value)
+              }}
+            ></Textarea>
+            <Button
+              onClick={() => {
+                setStorageRPC(rpcArea)
+              }}
             >
-              <HStack>
-                <Box>
-                  Address:
-                  <IndexerLink href={`address/${x.address}`} text={x.address} />
-                </Box>
-                <Box>
-                  Block:
-                  <IndexerLink
-                    href={`block/${x.blockNumber}`}
-                    text={x.blockNumber}
-                  />
-                </Box>
-                <Box>
-                  Transaction:
-                  <IndexerLink href={`tx/${x.txHash}`} text={x.txHash} />
-                </Box>
-              </HStack>
-              <Box textAlign='center'>{x.message}</Box>
+              Save
+            </Button>
+          </VStack>
+        ) : (
+          <>
+            <HStack>
+              <Box>Latest block: {lastBlock ?? '...'}</Box>
+              <Box>Handling block: {pointer ?? '...'}</Box>
+            </HStack>
+            <VStack>
+              {!messages.length && <Box>Nothing yet, hang on.</Box>}
+              {messages.map((x) => (
+                <VStack
+                  key={x.txHash}
+                  border='1px solid grey'
+                  borderRadius={5}
+                  p={2}
+                >
+                  <HStack>
+                    <Box>
+                      Address:
+                      <IndexerLink
+                        href={`address/${x.address}`}
+                        text={x.address}
+                      />
+                    </Box>
+                    <Box>
+                      Block:
+                      <IndexerLink
+                        href={`block/${x.blockNumber}`}
+                        text={x.blockNumber}
+                      />
+                    </Box>
+                    <Box>
+                      Transaction:
+                      <IndexerLink href={`tx/${x.txHash}`} text={x.txHash} />
+                    </Box>
+                  </HStack>
+                  <Box textAlign='center'>{x.message}</Box>
+                </VStack>
+              ))}
             </VStack>
-          ))}
-        </VStack>
+          </>
+        )}
       </VStack>
     </Layout>
   )
