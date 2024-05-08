@@ -93,7 +93,7 @@ const Index = () => {
               onChange={(e) => {
                 setRpcArea(e.target.value)
               }}
-            ></Textarea>
+            />
             <Button
               onClick={() => {
                 setStorageRPC(rpcArea)
