@@ -44,7 +44,7 @@ const Index = () => {
 
   useEffect(() => {
     if (pointer) fetchBlock(pointer)
-  }, [pointer])
+  }, [pointer, fetchBlock])
 
   useEffect(() => {
     if (rawBlock) {
@@ -65,7 +65,7 @@ const Index = () => {
       setMessages([...newMessages, ...messages])
       setPointer(rawBlock.number - 1)
     }
-  }, [rawBlock])
+  }, [rawBlock, messages])
 
   return (
     <Layout>
